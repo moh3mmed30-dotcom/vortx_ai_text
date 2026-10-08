@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>VORTX AI Text</title>
+
+<link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<main class="app">
+
+<header>
+
+<div class="brand">
+𓆩 𝑽𝑶𝑹𝑻𝑿 𓆪
+</div>
+
+<div class="sub">
+AI TEXT
+</div>
+
+</header>
+
+
+<section class="hero">
+
+<h1>
+VORTX AI Text
+</h1>
+
+<p>
+أدوات ذكية للنصوص مدعومة بنموذج DeepSeek.
+</p>
+
+</section>
+
+
+<section class="card">
+
+<label>
+النص
+</label>
+
+<textarea
+id="input"
+placeholder="اكتب النص هنا..."
+></textarea>
+
+
+<div class="actions">
+
+<button data-action="improve">
+تحسين
+</button>
+
+<button data-action="summarize">
+تلخيص
+</button>
+
+<button data-action="fusha">
+عامية ← فصحى
+</button>
+
+<button data-action="rewrite">
+إعادة صياغة
+</button>
+
+<button data-action="post">
+منشور Telegram
+</button>
+
+</div>
+
+
+<button
+id="run"
+class="primary"
+>
+معالجة النص
+</button>
+
+</section>
+
+
+<section class="card result-card">
+
+<div class="result-head">
+
+<label>
+النتيجة
+</label>
+
+<button id="copy">
+نسخ
+</button>
+
+</div>
+
+
+<div
+id="result"
+class="result"
+>
+ستظهر النتيجة هنا...
+</div>
+
+</section>
+
+
+<div
+id="status"
+class="status"
+></div>
+
+</main>
+
+
+<script>
+
+let action = "improve";
+
+
+document
+.querySelectorAll("[data-action]")
+.forEach(button => {
+
+button.onclick = () => {
+
+action = button.dataset.action;
+
+document
+.querySelectorAll("[data-action]")
+.forEach(item => {
+
+item.classList.remove("selected");
+
+});
+
+button.classList.add("selected");
+
+};
+
+});
+
+
+document
+.querySelector('[data-action="improve"]')
+.classList.add("selected");
+
+
+const input =
+document.getElementById("input");
+
+const result =
+document.getElementById("result");
+
+const status =
+document.getElementById("status");
+
+const run =
+document.getElementById("run");
+
+
+run.onclick = async () => {
+
+const text =
+input.value.trim();
+
+
+if (!text) {
+
+status.textContent =
+"اكتب النص أولاً.";
+
+return;
+
+}
+
+
+run.disabled = true;
+
+status.textContent =
+"جاري المعالجة بواسطة DeepSeek...";
+
+result.textContent = "";
+
+
+try {
+
+const response =
+await fetch(
+"/api/process",
+{
+method: "POST",
+
+headers: {
+"Content-Type":
+"application/json"
+},
+
+body: JSON.stringify({
+text: text,
+action: action
+})
+
+}
+);
+
+
+const data =
+await response.json();
+
+
+if (!response.ok || !data.ok) {
+
+throw new Error(
+data.error ||
+"حدث خطأ"
+);
+
+}
+
+
+result.textContent =
+data.answer ||
+"لم تصل نتيجة.";
+
+
+status.textContent =
+"تمت المعالجة بواسطة " +
+data.model;
+
+
+}
+
+catch (error) {
+
+result.textContent = "";
+
+status.textContent =
+error.message;
+
+}
+
+finally {
+
+run.disabled = false;
+
+}
+
+};
+
+
+document
+.getElementById("copy")
+.onclick = async () => {
+
+const text =
+result.textContent.trim();
+
+
+if (
+!text ||
+text.includes("ستظهر")
+) {
+
+return;
+
+}
+
+
+try {
+
+await navigator.clipboard
+.writeText(text);
+
+status.textContent =
+"تم النسخ";
+
+}
+
+catch (error) {
+
+status.textContent =
+"تعذر نسخ النص.";
+
+}
+
+};
+
+</script>
+
+</body>
+</html>

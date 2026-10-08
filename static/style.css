@@ -1,0 +1,160 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #070707;
+  color: #eee;
+  font-family: Arial, sans-serif;
+}
+
+.app {
+  max-width: 760px;
+  margin: auto;
+  padding: 22px 15px 45px;
+}
+
+header {
+  text-align: center;
+  padding: 12px 0 25px;
+}
+
+.brand {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.sub {
+  font-size: 10px;
+  color: #888;
+  letter-spacing: 4px;
+  margin-top: 5px;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.hero h1 {
+  margin: 0 0 8px;
+  font-size: 26px;
+}
+
+.hero p {
+  margin: 0;
+  color: #999;
+}
+
+.card {
+  background: #101010;
+  border: 1px solid #242424;
+  border-radius: 22px;
+  padding: 16px;
+  margin-top: 15px;
+  box-shadow: 0 12px 35px #0008;
+}
+
+label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 180px;
+  resize: vertical;
+  background: #080808;
+  color: #fff;
+  border: 1px solid #292929;
+  border-radius: 16px;
+  padding: 15px;
+  font-size: 16px;
+  outline: none;
+}
+
+textarea:focus {
+  border-color: #555;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+button {
+  border: 1px solid #2c2c2c;
+  background: #171717;
+  color: #ddd;
+  border-radius: 12px;
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+button:hover,
+button.selected {
+  background: #252525;
+  border-color: #666;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.primary {
+  width: 100%;
+  margin-top: 13px;
+  padding: 13px;
+  font-size: 16px;
+  font-weight: 700;
+  background: #eee;
+  color: #090909;
+  border: 0;
+}
+
+.result-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.result-head label {
+  margin: 0;
+}
+
+.result {
+  min-height: 160px;
+  white-space: pre-wrap;
+  line-height: 1.8;
+  background: #080808;
+  border: 1px solid #292929;
+  border-radius: 16px;
+  padding: 15px;
+  color: #ddd;
+}
+
+.status {
+  text-align: center;
+  color: #999;
+  margin-top: 13px;
+  min-height: 22px;
+  font-size: 13px;
+}
+
+@media (max-width: 500px) {
+
+  .brand {
+    font-size: 24px;
+  }
+
+  .actions button {
+    flex: 1 1 45%;
+  }
+
+}
